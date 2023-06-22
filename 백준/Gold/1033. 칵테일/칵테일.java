@@ -25,10 +25,14 @@ public class Main {
             int q = scanner.nextInt();
             arr[a].add(new cNode(b,p,q));
             arr[b].add(new cNode(a,q,p));
+            //전제 비율에 대한 최소 공배수 값을 저장 -> 이 값을 후에 D 값에 저장하고, DFS를 통해 
+            //q/p 곱하는 계산(즉 비율 계산)을 해서, 각 노드의 값을 저장한다. 
             lcm *= p*q/gcd(p,q);
         }
         D[0] = lcm;
         DFS(0);
+        
+        //각 노드의 값을 모든 노드의 최대공약수로 나눔 ( 최소 질량 구하기 위함 )
         long mgcd = D[0];
         for(int i=1;i<N;i++){
             mgcd = gcd(mgcd,D[i]);
@@ -47,6 +51,7 @@ public class Main {
         for(cNode i :arr[Node]){
             int next = i.getB();
             if(!visited[next]){
+                // 각 노드의 값을 이전 노드의 값과의 비율을 계산을 통해 계산하고 저장
                 D[next] = D[Node]*i.getQ()/i.getP();
                 DFS(next);
             }
