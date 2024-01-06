@@ -1,6 +1,7 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class Main {
     private static int[] parent;
@@ -22,24 +23,26 @@ public class Main {
         }
     }
     public static void main(String[] args) throws IOException {
-        Scanner scanner = new Scanner(System.in);
-
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
         result =0;
-        int N = scanner.nextInt();
-        int M = scanner.nextInt();
-        int T = scanner.nextInt();
+        int N = Integer.parseInt(st.nextToken());
+        int M =  Integer.parseInt(st.nextToken());
+        st = new StringTokenizer(br.readLine());
+        int T = Integer.parseInt(st.nextToken());
         //진실 아는 사람 저장
         trueP = new int[T];
         for(int i=0;i<T;i++){
-            trueP[i] = scanner.nextInt();
+            trueP[i] = Integer.parseInt(st.nextToken());
         }
         //파티 정보, 같은 파티 사람 union
         party = new ArrayList[M];
         for(int i=0;i<M;i++){
             party[i] = new ArrayList<Integer>();
-            int size = scanner.nextInt();
+            st = new StringTokenizer(br.readLine());
+            int size = Integer.parseInt(st.nextToken());
             for(int j=0;j<size;j++){
-                party[i].add(scanner.nextInt());
+                party[i].add(Integer.parseInt(st.nextToken()));
             }
         }
         //union 초기화
