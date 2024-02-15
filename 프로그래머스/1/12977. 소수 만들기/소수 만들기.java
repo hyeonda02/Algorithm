@@ -1,9 +1,8 @@
 import java.util.ArrayList;
-
 class Solution {
-       static ArrayList<Integer> combList;
+    static ArrayList<Integer> combList;
     public int solution(int[] nums) {
-        boolean[] visited = new boolean[nums.length];
+        boolean[] visited = new boolean[nums.length]; //조합에 뽑혔는지를 확인하기를 위한 배열
         combList = new ArrayList<>();
         int answer = 0;
         comb(nums, visited, 0, nums.length, 3 );
