@@ -1,29 +1,32 @@
-import java.util.Scanner;
 
+
+import java.util.*;
+import java.io.*;
 public class Main {
-    //p1929 소수 구하기
-    //정수론, 에라토스테네스의 체
-    //N의 최대범위가 1000000이므로, 에라토스테네스 방법 사용
-    public static void main(String[]args){
-        Scanner scanner = new Scanner(System.in);
-        int M = scanner.nextInt();
-        int N = scanner.nextInt();
-        int[] arr = new int[N+1];
-        for(int i=2;i<=N;i++){
-            arr[i] = i;
-        }
-        //제곱근까지만 수행
-        for(int i=2;i<=Math.sqrt(N);i++){
-            if(arr[i] ==0){
-                continue;
-            }
-            for(int j=i+i;j<=N;j+=i){
-                arr[j]=0;
+    public static void main(String[] args) throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int M = Integer.parseInt(st.nextToken());
+        int N = Integer.parseInt(st.nextToken());
+        int[] primeList = isPrime(N);
+        for (int i = M; i <= N; i++) {
+            if(primeList[i]!=0){
+                System.out.println(primeList[i]);
             }
         }
-        for(int i=M;i<N+1;i++){
-            if(arr[i]!=0)
-                System.out.println(arr[i]);
+    }
+
+    public static int[] isPrime(int N) {
+        int[] list = new int[N + 1];
+        for (int i = 2; i <=N; i++) {
+            list[i] = i;
         }
+        for (int i = 2; i <= Math.sqrt(N); i++) {
+            if(list[i]==0) continue;
+            for (int j = i + i; j <= N; j += i) {
+                list[j] = 0;
+            }
+        }
+        return list;
     }
 }
