@@ -1,24 +1,28 @@
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
+/**
+ * 최대 공약수, 유클리드호제법 사용
+ */
 public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        long A = Long.parseLong(st.nextToken());
-        long B = Long.parseLong(st.nextToken());
-        long result = gcd(A, B);
-        for (int i = 0; i < result; i++) {
-            bw.write("1");
-        }
-        bw.flush();
-        bw.close();
-
+    static Long A;
+    static Long B;
+    private static Long gcd(Long A, Long B ) {
+        if(B ==0) return A;
+        else return gcd(B,A%B);
     }
+    public static void main(String[] args)throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        A = Long.parseLong(st.nextToken());
+        B = Long.parseLong(st.nextToken());
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < gcd(A,B); i++) {
+            sb.append("1");
+        }
+        System.out.println(sb.toString());
 
-    private static long gcd(long a, long b) {
-        if (b==0) return a;
-        else return gcd(b, a % b);
     }
 }
