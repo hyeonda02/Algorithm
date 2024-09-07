@@ -1,44 +1,25 @@
-import java.util.ArrayList;
-
 class Solution {
-      static ArrayList<Integer> list;
+    static int num1;
+    static int num2;
+    static int num3;
     public int solution(int[] nums) {
-        boolean[] visited = new boolean[nums.length];
-        list = new ArrayList<>();
-        comb(nums, visited, 0, nums.length, 3 );
-        return list.size();
-    }
-    void comb(int[] arr, boolean[] visited, int start, int n, int r) {
-        if (r == 0) {
-            print(arr, visited, n);
-            return;
-        }
-        for (int i = start; i < n; i++ ) {
-            visited[i] = true;
-            comb(arr, visited, i + 1, n, r - 1);
-            visited[i] = false;
-        }
-    }
-
-    void print(int[] arr, boolean[] visited, int n) {
-        int target =0;
-        for (int i = 0; i < n; i++) {
-            if (visited[i]) {
-                target += arr[i];
+        int answer =0;
+        for (int i = 0; i <= nums.length-3; i++) {
+            num1 = nums[i];
+            for (int j = i + 1; j <= nums.length-2; j++) {
+                num2 = nums[j];
+                for (int z = j + 1; z <= nums.length-1; z++) {
+                    num3 = nums[z];
+                    if(isPrime(num1+num2+num3)) answer++;
+                }
             }
-
         }
-        if (isPrime(target)) {
-            list.add(target);
-        }
+        return answer;
     }
-    private boolean isPrime(int target) {
+    public boolean isPrime(int target){
         for (int i = 2; i <= Math.sqrt(target); i++) {
-            if (target % i == 0) {
-                return false;
-            }
+            if(target%i==0) return false;
         }
         return true;
     }
-
 }
