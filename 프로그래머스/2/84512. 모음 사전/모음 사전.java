@@ -1,7 +1,7 @@
 // 일단 왜 순서가 저런거지.. 이해가 안감.... 
 
 class Solution {
-    public char[] words = {'A','E','I','O','U'};
+    public String[] words = {"A","E","I","O","U"};
     public int answer;
     public boolean found;
     
@@ -29,7 +29,7 @@ class Solution {
             return;
         }
         
-        for(char c : words){
+        for(String c : words){
             dfs(current+c, target);
             if(found) return;
         }
