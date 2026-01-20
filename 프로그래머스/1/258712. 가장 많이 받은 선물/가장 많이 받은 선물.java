@@ -12,68 +12,44 @@ import java.util.*;
 class Solution {
     public int solution(String[] friends, String[] gifts) {
         // 1. 사람 이름 빛 번호 기록
-        Map<String,Integer> friendsNum = new HashMap<>();
+        Map<String,Integer> idx = new HashMap<>();
         for(int i=0;i<friends.length;i++){
-            friendsNum.put(friends[i],i);
+            idx.put(friends[i],i);
         }
         
         
-        // 2. 선물 주고 받은 개수 기록
+        // 2. 선물 주고 받은 개수 기록, 선물 지수 계산
         int len = friends.length;
         int[][] friendsGift = new int[len][len];
+        int[] totalGifts = new int[len];
         
         for(int i=0;i<gifts.length;i++){
             String[] relation = gifts[i].split(" ");
-            int num1 = friendsNum.get(relation[0]); //선물 준사람 번호
-            int num2 = friendsNum.get(relation[1]); //선물 받은 사람 번호
-            friendsGift[num1][num2] = friendsGift[num1][num2]+1;
+            int a = idx.get(relation[0]);
+            int b = idx.get(relation[1]);
+            
+            friendsGift[a][b]++;
+            totalGifts[a]++;
+            totalGifts[b]--;
             
         }
-        // 3. 선물 지수 계산 
-        int[] totalGifts = new int[len];
-        for(int i=0;i<len;i++){
-            int num = friendsNum.get(friends[i]);
-            int getCount =0;
-            int giveCount =0;
-            for(int j=0;j<len;j++){
-                getCount += friendsGift[j][num];
-                giveCount += friendsGift[num][j];
-                
-            }
-            totalGifts[num] = giveCount-getCount;
-            
-        }
-        // 4. 누가 많이 받을지 예측
+        
+        // 3. 누가 많이 받을지 예측
         int[] answer = new int[len];
-        boolean[][] visited = new boolean[len][len];
         
         for(int i=0;i<len;i++){
-            int num = friendsNum.get(friends[i]);
-            for(int j=0;j<len;j++){
-                int num2 = friendsNum.get(friends[j]);
-                if(num==num2||visited[num][num2]||visited[num2][num]) continue;
-                
-                int giveCount = friendsGift[num][num2];
-                int getCount = friendsGift[num2][num];
-                
-                if(giveCount>getCount) answer[num] += 1;
-                else if (giveCount<getCount) answer[num2] += 1;
+            for(int j=i+1;j<len;j++){
+                if(friendsGift[i][j]>friendsGift[j][i]) answer[i] += 1;
+                else if (friendsGift[i][j]<friendsGift[j][i]) answer[j] += 1;
                 else{
-                    if(totalGifts[num]>totalGifts[num2]) answer[num] += 1;
-                    else if (totalGifts[num]<totalGifts[num2]) answer[num2] +=1;
+                    if(totalGifts[i]>totalGifts[j]) answer[i] += 1;
+                    else if (totalGifts[i]<totalGifts[j]) answer[j] +=1;
                 }
-                visited[num][num2] = true;
-                visited[num2][num] = true;
             }
         }
         
         int max = 0;
-        for(int i=0;i<answer.length;i++){
-            if(answer[i]>max) max = answer[i];
-            
-        }
-        
-        
+        for(int a :answer) max = Math.max(max,a);
         return max;
     }
 }
