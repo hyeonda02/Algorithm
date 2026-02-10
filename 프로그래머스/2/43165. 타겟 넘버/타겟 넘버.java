@@ -19,28 +19,40 @@
 //  결과  8  6  4   2 2  0  6  4                      
 //  따라서, 결과 부분을 세면 2개 정답은 2개이다.
 //  모든 경우의 수를 DFS로 구해보자.. (깊이우선)
-
+import java.util.Stack;
 
 class Solution {
     public static int answer;
     public int solution(int[] numbers, int target) {
         // dfs 호출
-        answer =0;
-        dfs(numbers,0,target,0);
-        return answer;
+        return dfs(numbers,target);
         
     }
     
-    public void dfs(int[] numbers,int depth, int target, int sum){
-        // 현재의 길이랑 제공되는 숫자의 길이가 같을 경우, 스탑
-        if(depth==numbers.length){
-            if(target==sum) answer++;
-            return;
-        }else{
-            dfs(numbers,depth+1,target,sum-numbers[depth]);
-            dfs(numbers,depth+1,target,sum+numbers[depth]);
-        }
+    public int dfs(int[] numbers,int target){
+        // 1. 스택을 생성, 초기값으로 [0,0]
+        Stack<Integer> stack = new Stack<>();
+        stack.push(0); // 초기 합 : 0
+        stack.push(0); // 초기 인덱스 : 0
         
+        int cnt = 0;
+        
+        // 2. 스택이 채워져있을때 반복 수행한다.
+        while(!stack.isEmpty()){
+            int currentIdx = stack.pop();
+            int currentSum = stack.pop();
+            
+            // 3. 배열과 인덱스 같으면 종료 후 값 검증
+            if(currentIdx == numbers.length) {
+                if(currentSum==target) cnt++;
+            } else { // 3-1. 만약 다르다면 다음 단계로 이동한다
+                stack.push(currentSum+numbers[currentIdx]);
+                stack.push(currentIdx+1);
+                stack.push(currentSum-numbers[currentIdx]);
+                stack.push(currentIdx+1);
+            }
+        }
+        return cnt;
         
     }
 }
