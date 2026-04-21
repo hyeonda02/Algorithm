@@ -8,10 +8,8 @@ public class Main {
             for(int j=0;j<N;j++){
                 if(num%10==0){
                     num = 1;
-                    System.out.print(num+" ");
-                }else{
-                    System.out.print(num%10+" ");
                 }
+                System.out.print(num+" ");
                 num++;
             }
             System.out.println();
