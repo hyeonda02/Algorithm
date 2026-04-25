@@ -2,13 +2,13 @@ import java.util.Scanner;
 public class Main {
     public static boolean solution(int[] a, int[] b){
         if(a.length<b.length)return false; 
-        String strA="";
-        String strB="";
+        String strA=",";
+        String strB=",";
         for(int i=0;i<a.length;i++){
-            strA+=a[i];
+            strA+=a[i]+",";
         }
         for(int i=0;i<b.length;i++){
-            strB+=b[i];
+            strB+=b[i]+",";
         }
         if(strA.contains(strB)) return true;
         return false;
